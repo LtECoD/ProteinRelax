@@ -36,11 +36,11 @@ def relax_protein(unrelaxed_protein, output_directory, output_name, model_device
     print(f"Relaxed output written to {relaxed_output_path}...")
 
 if __name__ == '__main__':
-    with open("./data/2KL8-79.pdb", "r") as f:
+    with open("./data/2KL8-99.pdb", "r") as f:
         lines = "\n".join(f.readlines())
         protein = afprotein.from_pdb_string(lines)
     relax_protein(
         unrelaxed_protein=protein,
         output_directory="./data",
-        output_name="2KL8-79",
+        output_name="2KL8-99",
         model_device="cuda:0")
