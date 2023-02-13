@@ -53,5 +53,5 @@ if __name__ == '__main__':
     relax_protein(
         unrelaxed_protein=protein,
         output_directory=args.outdir,
-        output_name=pdb_name[:-4]+"_relaxed.pdb",
+        output_name=pdb_name,
         model_device=device)
