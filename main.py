@@ -1,5 +1,6 @@
 import os
 import time
+import argparse
 
 import relax
 import protein as afprotein
@@ -36,11 +37,21 @@ def relax_protein(unrelaxed_protein, output_directory, output_name, model_device
     print(f"Relaxed output written to {relaxed_output_path}...")
 
 if __name__ == '__main__':
-    with open("./data/2KL8-99.pdb", "r") as f:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--pdb", type=str)
+    parser.add_argument("--outdir", type=str)
+    parser.add_argument("--device", type=int, default=-1)
+    args = parser.parse_args()
+    
+    pdb_name = os.path.basename(args.pdb)
+    device = f"cuda: {args.device}" if args.device > 0 else "cpu"
+
+    with open(args.pdb, "r") as f:
         lines = "\n".join(f.readlines())
         protein = afprotein.from_pdb_string(lines)
+
     relax_protein(
         unrelaxed_protein=protein,
-        output_directory="./data",
-        output_name="2KL8-99",
-        model_device="cuda:0")
+        output_directory=args.outdir,
+        output_name=pdb_name[:-4]+"_relaxed.pdb",
+        model_device=device)
